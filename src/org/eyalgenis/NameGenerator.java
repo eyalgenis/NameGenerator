@@ -8,10 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 public class NameGenerator {
 
-    private static final String USER_AGENT = "Mozilla/5.0";
     private static final String GET_URL = "https://www.fakenamegenerator.com/gen-random-us-us.php";
-    private static HashMap<String, Integer> nameCounter = new HashMap<>();
-    private static int requests = 100;
+    private static final HashMap<String, Integer> nameCounter = new HashMap<>();
+    private static final int requests = 100;
+    private static final int results = 10;
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -34,7 +34,7 @@ public class NameGenerator {
         List<String> mapKeys = new ArrayList<>(sorted.keySet());
         Iterator<String> keyIt = mapKeys.iterator();
         int i=0;
-        while (keyIt.hasNext() && i<10) {
+        while (keyIt.hasNext() && i<results) {
             String key = keyIt.next();
             System.out.println(key + " " + sorted.get(key));
             i++;
@@ -57,7 +57,9 @@ public class NameGenerator {
 
         LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
 
+        int i=0;
         for (Integer val : mapValues) {
+            if (i >= results) break;
             Iterator<String> keyIt = mapKeys.iterator();
 
             while (keyIt.hasNext()) {
@@ -70,6 +72,7 @@ public class NameGenerator {
                     break;
                 }
             }
+            i++;
         }
         return sortedMap;
     }
